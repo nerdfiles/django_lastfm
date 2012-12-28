@@ -1,0 +1,7 @@
+Django==1.4.3
+Markdown==2.2.1
+Werkzeug==0.8.3
+django-extensions==1.0.2
+pyjade==1.7
+pylast==0.5.11
+wsgiref==0.1.2
