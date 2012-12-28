@@ -33,6 +33,7 @@ def render_response(request, *args, **kwargs):
   return render_to_response(*args, **kwargs)
 
 def home(request):
+  
   return render_response(request, 'home.tmpl')
 
 def recent_tracks(request, limit=5):

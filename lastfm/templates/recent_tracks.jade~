@@ -9,9 +9,9 @@ section.m.m-recent-tracks
   footer
     ul
       li
-        a(href!="{{ pub_user_url }}")
+        a(href!="{{ pub_user_url }}") See Profile
       li
-        a(href!="{{ pub_library_url }}")
+        a(href!="{{ pub_library_url }}") Open Library
       li
-        a(href!="{{ pub_friends_url }}")
+        a(href!="{{ pub_friends_url }}") See Friends
 
