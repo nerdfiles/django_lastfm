@@ -3,12 +3,15 @@ section.m.m-recent-tracks
   h1.m--title-recents-tracks
     a(href!="{{ pub_recent_tracks_url }}") Recent Tracks
   ul.m--content-recent-tracks
-    {% for track in recent_tracks %}
+    for track in recent_tracks
       li {{ track }}
-    {% endfor %}
+    endfor
   footer
     ul
       li
-        a(href!="{{ pub_user_url }}")
-        a(href!="{{ pub_library_url }}")
-        a(href!="{{ pub_friends_url }}")
+        a(href!="{{ pub_user_url }}") See Profile
+      li
+        a(href!="{{ pub_library_url }}") Open Library
+      li
+        a(href!="{{ pub_friends_url }}") See Friends
+
