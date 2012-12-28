@@ -1,5 +1,18 @@
 
-<ul>
-  <li>Recents</li>
-</ul>
-
+<section class="m m-recent-tracks">
+  <h1 class="m--title-recent-tracks">
+    <a href="{{ pub_recent_tracks_url }}">Recent Tracks</a>
+  </h1>
+  <ul class="">
+  {% for track in recent_tracks %}
+    <li>{{ track }}</li>
+  {% endfor %}
+  </ul><!-- . -->
+  <footer>
+    <ul>
+      <li><a href="{{ pub_user_url }}">See User Profile</a></li>
+      <li><a href="{{ pub_library_url }}">See Full Library</a></li>
+      <li><a href="{{ pub_friends_url }}">See Friends</a></li>
+    </ul>
+  </footer>
+</section>

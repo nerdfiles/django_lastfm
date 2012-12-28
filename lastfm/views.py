@@ -14,10 +14,16 @@ from django.http import Http404
 from django.template import RequestContext
 import logging
 
+# django_lastfm essentials
 from pprint import pprint
 from django.core.cache import cache
 import pylast
 from settings import API_KEY, API_SECRET, username, password_hash
+
+# defaults
+
+DEFAULT_LIMIT = 5
+DEFAULT_TO = 3600
 
 
 # == VIEWS ======================================== #
@@ -27,50 +33,65 @@ def render_response(request, *args, **kwargs):
   return render_to_response(*args, **kwargs)
 
 def home(request):
-  return render_response(request, 'home.html')
+  return render_response(request, 'home.tmpl')
 
-def recent_tracks(request):
+def recent_tracks(request, limit=5):
+
+  #sanity check on item limit
+  if limit is 0:
+    limit = None
+
+  #call api through pylast
   network = pylast.LastFMNetwork(
     api_key = API_KEY, 
     api_secret = API_SECRET, 
     username = username, 
     password_hash = password_hash)
   
-  user_data = network.get_user(username)
-  r_tracks = user_data.get_recent_tracks(limit=5)
-  recent_tracks = [r.track for r in r_tracks]
-  pprint(recent_tracks)
-
-  '''
-  user_data = network.get_user(username)
-  r_tracks = user_data.get_recent_tracks(limit=5)
-  recent_tracks = [r.track for r in r_tracks]
+  #site-wide caching if available
   network.enable_caching()
 
-  #cache
-  lfm_data = cache.get('lfm_data')
-  TIMEOUT = 1800*36 #secs
-  if lfm_data:
+  #user
+  user_data = network.get_user(username)
+
+  #urls
+  base_url = "http://www.last.fm"
+  pub_user_url = "%s/user/%s" % (base_url, username,)
+  pub_friends_url = "%s/friends" % pub_user_url
+  pub_library_url = "%s/library" % pub_user_url
+  pub_recent_tracks_url = "%s/tracks" % pub_user_url
+
+  #cache (double cached!)
+  cached_recent_tracks = cache.get('cached_recent_tracks')
+  if cached_recent_tracks:
     return {
-      "rt": recent_tracks
+      "pub_recent_tracks_url": pub_recent_tracks_url,
+      "pub_user_url": pub_user_url,
+      "pub_friends_url": pub_friends_url,
+      "pub_library_url": pub_library_url,
+      "recent_tracks": cached_recent_tracks,
     }
 
-  #raw
-  lfm_data = recent_tracks
+  #get recent track data
+  r_tracks = user_data.get_recent_tracks(limit=limit)
+
+  #list for recent tracks (raw)
+  recent_tracks = [r.track for r in r_tracks]
 
   #set cache for next time
   cache.set(
-    "lfm_data",
-    lfm_data,
-    TIMEOUT
+    "cached_recent_tracks",
+    recent_tracks,
+    DEFAULT_TO
   )
 
   #load raw
-  return {
-    'rt': lfm_data,
-  }
-  '''
-  return render_response(request, 'recent_tracks.tmpl')
+  return render_response(request, 'recent_tracks.tmpl', { 
+    "pub_recent_tracks_url": pub_recent_tracks_url,
+    "pub_user_url": pub_user_url,
+    "pub_library_url": pub_library_url,
+    "pub_friends_url": pub_friends_url,
+    "recent_tracks": recent_tracks, })
 
 def loved_tracks(request):
   return render_response(request, 'loved_tracks.tmpl')

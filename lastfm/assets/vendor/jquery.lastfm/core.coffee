@@ -18,9 +18,9 @@ $.fn.extend
     # prepare_lastfm
     #
     # http://domain.com/fm/playing/
-    # http://domain.com/fm/latest/5/
-    # http://domain.com/fm/loved/5/
-    # http://domain.com/fm/friends/5/
+    # http://domain.com/fm/latest/<limit>/
+    # http://domain.com/fm/loved/<limit>/
+    # http://domain.com/fm/friends/<limit>/
 
     prepare_lastfm = (url) ->
 
