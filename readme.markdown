@@ -10,7 +10,13 @@
 
 See [https://github.com/SyrusAkbary/pyjade](https://github.com/SyrusAkbary/pyjade).
 
-##pylast configuration
+##pylast
+
+###Peruse for API
+
+See [http://pylast.googlecode.com/svn/trunk/pylast.py](http://pylast.googlecode.com/svn/trunk/pylast.py).
+
+###Configuration
 
 Set the following in ``settings.py``:
 
