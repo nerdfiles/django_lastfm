@@ -2,10 +2,15 @@
 
 ##Deps
 
-1. pylast
-2. coffeescript
+1. [pylast](https://code.google.com/p/pylast/)
+2. [coffeescript](http://coffeescript.org/)
+3. [pyjade](https://github.com/SyrusAkbary/pyjade)
 
-##pylast
+##pyjade
+
+See [https://github.com/SyrusAkbary/pyjade](https://github.com/SyrusAkbary/pyjade).
+
+##pylast configuration
 
 Set the following in ``settings.py``:
 
