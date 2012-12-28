@@ -86,7 +86,7 @@ def recent_tracks(request, limit=5):
   )
 
   #load raw
-  return render_response(request, 'recent_tracks.tmpl', { 
+  return render_response(request, 'recent_tracks.jade', { 
     "pub_recent_tracks_url": pub_recent_tracks_url,
     "pub_user_url": pub_user_url,
     "pub_library_url": pub_library_url,
